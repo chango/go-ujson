@@ -65,6 +65,10 @@ func (j *JSON) Map(args ...map[string]interface{}) map[string]interface{} {
 
 // MaybeMap type asserts to `map`
 func (j *JSON) MaybeMap() (map[string]interface{}, error) {
+	if j == nil {
+		return nil, errors.New("Cannot MaybeMap on a nil pointer")
+	}
+
 	if m, ok := (j.Root).(map[string]interface{}); ok {
 		return m, nil
 	}

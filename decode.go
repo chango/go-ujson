@@ -213,8 +213,13 @@ func (j *Decoder) decodeString() (interface{}, error) {
 	j.idx++
 	startIdx := j.idx
 	state := SS_NORMAL
+	maxLength := int64(len(j.data))
 
 	for {
+		if j.idx >= maxLength {
+			return nil, errors.New("Index exceeded maximum length of j.data")
+		}
+
 		c = j.data[j.idx]
 		j.idx++
 		switch state {
